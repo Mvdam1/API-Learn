@@ -1,0 +1,38 @@
+from flask import Flask, url_for, request
+
+app = Flask(__name__)
+
+@app.route("/hello_world/<string:usuario>/<int:idade>/<float:altura>")
+def hello_world(usuario,idade,altura):
+    return {"Usuario" :usuario, "idade": idade,"Altura":altura}
+
+
+@app.route("/index")
+def index(message):
+    return {"message": "Ola"}
+
+@app.route("/")
+def inicio():
+    return "Pagina que abre automaticp na api"
+
+
+@app.route("/about", methods =["POST","GET"])
+def about():
+    if request.method =="GET":  
+        return "This is get"
+    else:
+        return "This is post"
+    
+ 
+
+@app.route("/project")
+def project():
+    return "Pagina de projeto"
+
+
+
+with app.test_request_context():
+    print(url_for('project'))
+    print(url_for('index'))
+    print(url_for('about', next='/'))
+    print(url_for("hello_world",usuario = "Matheus", idade = 20, altura = 1.73))
